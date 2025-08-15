@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import org.springframework.ui.Model;
 
@@ -77,7 +77,6 @@ public class StudentController {
     service.deleteStudentById(id);
     return "redirect:/students";
   }
-
 
 }
 
