@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Courses</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="users-page">
+  <h2 class="text-center mt-5">List Courses</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <a class="btn btn-success" th:href="@{/courses/new}"><i class="mx-1 fa-solid fa-plus"></i>Create Course</a>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <table class="table table-dark table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Credits</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="course: ${courses}">
+        <td th:text="${course.name}"></td>
+        <td th:text="${course.code}"></td>
+        <td th:text="${course.credits}"></td>
+        <td>
+          <a class="text-success" th:href="@{/courses/edit/{id}(id=${course.id})}"><i class="fa-solid fa-pen-to-square mx-3"></i></a>
+          <a class="text-danger" th:href="@{/courses-delete/{id}(id=${course.id})}"><i class="fa-solid fa-trash"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</body>
+</html>
