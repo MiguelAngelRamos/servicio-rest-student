@@ -1,5 +1,6 @@
 package cl.kibernumacademy.academy.controllers;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,12 @@ public class StudentControllerRest {
     public ResponseEntity<StudentResponse> create(@Valid @RequestBody StudentRequest request) {
         Student student = new Student(request.getName(), request.getLastname(), request.getEmail());
         Student saved = service.saveStudent(student);
-        return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
+        /*
+         * Debe incluir header Location con la URL del nuevo recurso.
+         */
+        URI location = URI.create(String.format("/api/students/", saved.getId()));
+        // return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
+        return ResponseEntity.created(location).body(toResponse(saved));
     }
 
     @PutMapping("/{id}")
