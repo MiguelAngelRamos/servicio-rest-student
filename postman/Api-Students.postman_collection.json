@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "de7f4a7c-1a19-4912-878d-cdb2067b6df2",
+		"name": "Api-Students",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6100311"
+	},
+	"item": [
+		{
+			"name": "GET: Listado de estudiantes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb3NlZmEiLCJ2ZXIiOjAsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpc3MiOiJhcGlyZXN0IiwiZXhwIjoxNzU1MDU0MzA5LCJpYXQiOjE3NTUwNTM0MDksImp0aSI6ImE5NTFkYWYxLTM3MmEtNGExZi1hYjA4LTBhZjBlYzBlODdkNCJ9.8HulNhSA_ArogxEshWuDIMeKSlPq6YSW-bNeHpLsNkY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}{{students_base}}",
+					"host": [
+						"{{base_url}}{{students_base}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST: Crear estudiante",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"if(res && res.id) pm.collectionVariables.set('student_id',res.id);\r",
+							"pm.test('201 Created', () => pm.response.to.have.status(201));\r",
+							"pm.test('Header Location presente', () => pm.response.to.have.header('Location'));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sofia\",\r\n    \"lastname\": \"Stallman\",\r\n    \"email\": \"sofia.stallman@gnu.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}{{students_base}}",
+					"host": [
+						"{{base_url}}{{students_base}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT: Actualizar Estudiante",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('200 OK', () => pm.response.to.have.status(200));\r",
+							"pm.test('Lastname actualizado', () => {\r",
+							"    const res = pm.response.json();\r",
+							"    pm.expect(res.lastname).to.eql('Perez');\r",
+							"});\r",
+							"pm.test('Correo actualizado correctamente', () => {\r",
+							"    const res = pm.response.json();\r",
+							"    pm.expect(res.email).to.eql('sofia.perez@kibernum.com');\r",
+							"});\r",
+							"\r",
+							"pm.test('Correo contiene el dominio adecuado', () => {\r",
+							"    const res = pm.response.json();\r",
+							"    pm.expect(res.email).to.contain('@kibernum.com');\r",
+							"});\r",
+							"\r",
+							"// Estoy testeando que el correo fue actualizado y cambio solo la parte antes del dominio\r",
+							"pm.test('Correo actualizado antes del dominio', () => {\r",
+							"    const res = pm.response.json();\r",
+							"    pm.expect(res.email).to.match(/^sofia\\.perez@kibernum\\.com$/);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sofia\",\r\n    \"lastname\": \"Perez\",\r\n    \"email\": \"sofia.perez@kibernum.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}{{students_base}}/{{student_id}}",
+					"host": [
+						"{{base_url}}{{students_base}}"
+					],
+					"path": [
+						"{{student_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE: Eliminar estudiante",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}{{students_base}}/{{student_id}}",
+					"host": [
+						"{{base_url}}{{students_base}}"
+					],
+					"path": [
+						"{{student_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET: Obtener un estudiante por Id",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "GET por id inexistente",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "POST: con datos inválidos",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE: sobre id inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 404 Not Found', () => pm.response.to.have.status(404));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}{{students_base}}/99999",
+					"host": [
+						"{{base_url}}{{students_base}}"
+					],
+					"path": [
+						"99999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listado Vacio",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.collectionVariables.set('correlation_id', pm.variables.replaceIn('{{$randomUUID}}'));\r",
+					"pm.collectionVariables.set('timestamp_iso', new Date().toISOString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": ""
+		},
+		{
+			"key": "api_prefix",
+			"value": ""
+		},
+		{
+			"key": "students_base",
+			"value": ""
+		},
+		{
+			"key": "student_id",
+			"value": ""
+		},
+		{
+			"key": "correlation_id",
+			"value": ""
+		},
+		{
+			"key": "timestamp_iso",
+			"value": ""
+		},
+		{
+			"key": "accept",
+			"value": ""
+		},
+		{
+			"key": "content_type",
+			"value": ""
+		}
+	]
+}
