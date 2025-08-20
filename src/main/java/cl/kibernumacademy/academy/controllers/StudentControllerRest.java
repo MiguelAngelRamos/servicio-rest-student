@@ -57,7 +57,7 @@ public class StudentControllerRest {
         /*
          * Debe incluir header Location con la URL del nuevo recurso.
          */
-        URI location = URI.create(String.format("/api/students/", saved.getId()));
+        URI location = URI.create(String.format("/api/students/%s", saved.getId()));
         // return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
         return ResponseEntity.created(location).body(toResponse(saved));
     }
